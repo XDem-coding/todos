@@ -252,8 +252,8 @@ editNote = (id) => {
 editButton = (id) => {
     document.querySelector('h1').innerText = "Editor..!!"
     document.getElementById('btn-container').innerHTML = `
-        <button class="btn btn-primary my-1" style="margin: auto;width:45%;" id="addButton" onclick="editNote(${id})">Edit</button>
-        <button class="btn btn-primary my-1" style="margin: auto;width:45%;" id="addButton" onclick="editCancel()">Cancel</button>
+        <button class="btn btn-primary my-4" style="margin: auto;width:45%;" id="addButton" onclick="editNote(${id})">Edit</button>
+        <button class="btn btn-primary my-4" style="margin: auto;width:45%;" id="addButton" onclick="editCancel()">Cancel</button>
     `
     let data = JSON.parse(localStorage.getItem('notes'));
     document.getElementById('noteTitle').value = data[id]["title"];
@@ -286,6 +286,55 @@ toDone = (id) => {
     showNotes();
 }
 
+darkLight = () => {
+    let theme = document.getElementById('dark-light').checked;
+    if (theme == true){
+        var bColor = "#222";
+        var hLabel = "#fff";
+        var input = "#222";
+        var card = "#333";
+        var dropdown = "#111";
+        var bodw = "none";
+        var stheme = "dark"
+    }
+    else{
+        var bColor = "#fff"
+        var hLabel = "#000";
+        var input = "#fff";
+        var card = "#fff";
+        var dropdown = "#fff";
+        var bodw = "1px";
+        var stheme = "light";
+    }
+    document.querySelector("body").style.background = bColor;
+    document.querySelectorAll("h1").forEach(element =>{
+        element.style.color = hLabel;
+    });
+    document.querySelectorAll("label").forEach(element =>{
+        element.style.color = hLabel;
+    });
+    document.getElementById("search").style.background = input;
+    document.getElementById("noteTitle").style.background = input;
+    document.getElementById("search").style.color = hLabel;
+    document.getElementById("noteTitle").style.color = hLabel;
+
+    document.querySelector("hr").style.background = hLabel;
+
+    document.querySelector("textarea").style.background = input;
+    document.querySelector("textarea").style.color = hLabel;
+    document.querySelector(".card").style.background = card;
+    document.querySelectorAll(".dropdown-menu").forEach(element =>{
+        element.style.background = dropdown;
+    });
+
+    document.querySelectorAll("input").forEach(element =>{
+        element.style.border = bodw;
+    });
+    document.querySelector("textarea").style.border = bodw;
+
+    localStorage.setItem('theme', stheme);
+}
+
 searchNotes = () => {
     let query = document.getElementById('search').value.toLowerCase();
     let title = document.querySelectorAll('.card-title');
@@ -307,17 +356,23 @@ searchNotes = () => {
 
     match.forEach(element =>{
         element.parentElement.parentElement.style.display = "block" 
-        console.log(element)
     });
 }
 
 initialRun = () => {
+    let theme = localStorage.getItem('theme');
+    if (theme==null){theme = "light";localStorage.setItem('theme','light')};
+    if (theme=="dark"){document.getElementById("dark-light").checked = true};
+    darkLight();
+
     document.getElementsByClassName("priority")[1].checked = true;
     priorityTextUpdate();
 
     document.querySelectorAll(".priority").forEach(item => {
         item.addEventListener('input', priorityTextUpdate);
     })
+
+    document.getElementById("dark-light").addEventListener("input", darkLight);
     
     showNotes();
 
