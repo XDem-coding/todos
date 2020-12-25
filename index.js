@@ -3,6 +3,18 @@ priorityTextUpdate = () => {
     for (let i = 0; i < priorities.length; i++) {
         if (priorities[i].checked) {
             document.getElementById('priority').innerText = priorities[i].parentElement.getElementsByTagName("label")[0].innerText;
+            if(i==0){
+                document.getElementById('priority').style.background = "#ffcccc";
+                document.getElementById('priority').style.color = "red";
+            }
+            else if(i==1){
+                document.getElementById('priority').style.background = "#ccccff";
+                document.getElementById('priority').style.color = "blue";
+            }
+            else if(i==2){
+                document.getElementById('priority').style.background = "#ccffcc";
+                document.getElementById('priority').style.color = "black";
+            }
         }
     }
 }
@@ -70,7 +82,7 @@ showNotes = () => {
             data.forEach(item => {
                 if (item["priority"].toLowerCase() == 'maximum' && item["status"].toLowerCase()== 'pending') {
                     html += `
-                    <div class="card my-2 mx-auto border-danger text-danger" style="width: 18rem;">
+                    <div class="card my-2 mx-auto border-danger text-danger" style="width: 18rem;background:#ffcccc;">
                         <div class="card-body text-center" style="position: relative;">
                             <h5 class="card-title">${item["title"]}</h5>
                             <hr>
@@ -96,7 +108,7 @@ showNotes = () => {
             data.forEach(item => {
                 if (item["priority"].toLowerCase() == 'normal' && item["status"].toLowerCase()== 'pending') {
                     html += `
-                    <div class="card my-2 mx-auto border-danger text-danger" style="width: 18rem;">
+                    <div class="card my-2 mx-auto border-primary text-primary" style="width: 18rem;background:#ccccff;">
                         <div class="card-body text-center" style="position: relative;">
                             <h5 class="card-title">${item["title"]}</h5>
                             <hr>
@@ -122,7 +134,7 @@ showNotes = () => {
             data.forEach(item => {
                 if (item["priority"].toLowerCase() == 'minimum' && item["status"].toLowerCase()== 'pending') {
                     html += `
-                    <div class="card my-2 mx-auto border-danger text-danger" style="width: 18rem;">
+                    <div class="card my-2 mx-auto border-dark text-dark" style="width: 18rem;background:#e6e6e6;">
                         <div class="card-body text-center" style="position: relative;">
                             <h5 class="card-title">${item["title"]}</h5>
                             <hr>
@@ -148,7 +160,7 @@ showNotes = () => {
             data.forEach(item => {
                 if (item["status"].toLowerCase() == "done"){
                     html += `
-                    <div class="card my-2 mx-auto border-success text-success" style="width: 18rem;">
+                    <div class="card my-2 mx-auto border-success text-success" style="width: 18rem;background:#ccffcc;">
                         <div class="card-body text-center" style="position: relative;">
                             <h5 class="card-title">${item["title"]}</h5>
                             <hr>
