@@ -12,7 +12,7 @@ priorityTextUpdate = () => {
                 document.getElementById('priority').style.color = "blue";
             }
             else if(i==2){
-                document.getElementById('priority').style.background = "#ccffcc";
+                document.getElementById('priority').style.background = "#e6e6e6";
                 document.getElementById('priority').style.color = "black";
             }
         }
