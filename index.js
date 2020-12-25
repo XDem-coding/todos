@@ -70,8 +70,8 @@ showNotes = () => {
             data.forEach(item => {
                 if (item["priority"].toLowerCase() == 'maximum' && item["status"].toLowerCase()== 'pending') {
                     html += `
-                    <div class="card my-2 mx-auto text-white bg-danger" style="width: 18rem;">
-                        <div class="card-body text-center border-danger text-danger" style="position: relative;">
+                    <div class="card my-2 mx-auto border-danger text-danger" style="width: 18rem;">
+                        <div class="card-body text-center" style="position: relative;">
                             <h5 class="card-title">${item["title"]}</h5>
                             <hr>
                             <p class="card-text">${item["description"]}</p>
