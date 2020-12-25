@@ -306,15 +306,7 @@ initialRun = () => {
     document.querySelectorAll(".priority").forEach(item => {
         item.addEventListener('input', priorityTextUpdate);
     })
-
-    let data = JSON.parse(localStorage.getItem('notes'));
-    data.forEach(item => {
-        if(item.length == 3){
-            item["status"] = "pending";
-        }
-    })
-    data = JSON.stringify(data);
-    localStorage.setItem('notes', data);
+    
     showNotes();
 
     document.getElementById('search').addEventListener('input', searchNotes);
