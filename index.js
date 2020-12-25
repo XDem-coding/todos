@@ -226,15 +226,12 @@ editCancel = () => {
 
 searchNotes = () => {
     let query = document.getElementById('search').value.toLowerCase();
+    console.log(query);
     let title = document.querySelectorAll('.card-title');
-    let description = document.querySelectorAll('.card-text');
-    
-    let match = false;
-    
-    for(var i=0; i<title.length; i++){
-        if((title[i].innerText.toLowerCase().indexOf(query) > -1) || (description[i].innerText.toLowerCase().indexOf(query) > -1)){match=true}
-        if (match==true){title[i].parentElement.parentElement.style.display = "block"}else{title[i].parentElement.parentElement.style.display = "none"}
-    }
+
+    title.forEach(element => {
+        if (element.innerText.toLowerCase().indexOf(query) > -1) { element.parentElement.parentElement.style.display = "block" } else { element.parentElement.parentElement.style.display = "none" }
+    });
 }
 
 initialRun = () => {
