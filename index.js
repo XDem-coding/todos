@@ -226,7 +226,6 @@ editCancel = () => {
 
 searchNotes = () => {
     let query = document.getElementById('search').value.toLowerCase();
-    console.log(query);
     let title = document.querySelectorAll('.card-title');
     let description = document.querySelectorAll('.card-text');
 
