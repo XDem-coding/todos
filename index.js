@@ -12,7 +12,7 @@ addNote = () => {
     let description = document.getElementById('noteDescp').value;
     if (description.length == 0) { description = '-' };
     let priority = document.getElementById('priority').innerText;
-    const status = "pending"
+    const status = "pending";
 
     if (title.length == 0) {
         document.getElementById('emptyField').style.display = 'block';
@@ -196,6 +196,7 @@ editNote = (id) => {
     let description = document.getElementById('noteDescp').value;
     if (description.length == 0) { description = '-' };
     let priority = document.getElementById('priority').innerText;
+    const status = "pending";
 
     if (title.length == 0) {
         document.getElementById('emptyField').style.display = 'block';
@@ -221,7 +222,7 @@ editNote = (id) => {
                 }
             })
             if (already != true) {
-                data[id] = { "title": title, "description": description, "priority": priority };
+                data[id] = {"title": title, "description": description, "priority": priority, "status": status};
                 data = JSON.stringify(data);
                 localStorage.setItem('notes', data);
                 location = window.location;
