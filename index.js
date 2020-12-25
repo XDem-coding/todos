@@ -12,6 +12,7 @@ addNote = () => {
     let description = document.getElementById('noteDescp').value;
     if (description.length == 0) { description = '-' };
     let priority = document.getElementById('priority').innerText;
+    const status = "pending"
 
     if (title.length == 0) {
         document.getElementById('emptyField').style.display = 'block';
@@ -21,7 +22,7 @@ addNote = () => {
         let success = document.getElementById('success')
         if (localStorage.getItem('notes') == null) {
             data = [];
-            data.push({ "title": title, "description": description, "priority": priority });
+            data.push({ "title": title, "description": description, "priority": priority, "status": status});
             data = JSON.stringify(data);
             localStorage.setItem('notes', data);
             success.innerText = `Note added successfully: ${title}..!!`;
@@ -40,7 +41,7 @@ addNote = () => {
                 }
             })
             if (already != true) {
-                data.push({ "title": title, "description": description, "priority": priority });
+                data.push({ "title": title, "description": description, "priority": priority, "status": status});
                 data = JSON.stringify(data);
                 localStorage.setItem('notes', data);
                 success.innerText = `Note added successfully: ${title}..!!`;
@@ -67,11 +68,12 @@ showNotes = () => {
         if (notes.length != 2) {
             data = JSON.parse(notes);
             data.forEach(item => {
-                if (item["priority"].toLowerCase() == 'maximum') {
+                if (item["priority"].toLowerCase() == 'maximum' && item["status"].toLowerCase()== 'pending') {
                     html += `
-                    <div class="card my-2 mx-auto" style="width: 18rem;">
-                        <div class="card-body text-center" style="position: relative;">
+                    <div class="card my-2 mx-auto text-white bg-danger" style="width: 18rem;">
+                        <div class="card-body text-center border-danger text-danger" style="position: relative;">
                             <h5 class="card-title">${item["title"]}</h5>
+                            <hr>
                             <p class="card-text">${item["description"]}</p>
                             <div class="btn-group" role="group" style="position: absolute;top: 10px;right: 0px;">
                                 <div class="dropdown">
@@ -79,8 +81,9 @@ showNotes = () => {
                                         <span class="visually-hidden">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="deleteNote btn btn-outline-primary" onClick="deleteNotes(${data.indexOf(item)})">Delete</button>
-                                        <button type="button" class="editNote btn  btn-outline-primary" onClick="editButton(${data.indexOf(item)})">Edit</button>
+                                        <button type="button" class="deleteNote btn btn-outline-primary my-2" onClick="deleteNotes(${data.indexOf(item)})">Delete</button>
+                                        <button type="button" class="editNote btn  btn-outline-primary my-2" onClick="editButton(${data.indexOf(item)})">Edit</button>
+                                        <button type="button" class="btn btn-outline-success my-2" onClick="toDone(${data.indexOf(item)})">Set as done</button>
                                     </div>
                                 </div>   
                             </div>
@@ -91,11 +94,12 @@ showNotes = () => {
             })
 
             data.forEach(item => {
-                if (item["priority"].toLowerCase() == 'normal') {
+                if (item["priority"].toLowerCase() == 'normal' && item["status"].toLowerCase()== 'pending') {
                     html += `
-                    <div class="card my-2 mx-auto" style="width: 18rem;">
+                    <div class="card my-2 mx-auto border-danger text-danger" style="width: 18rem;">
                         <div class="card-body text-center" style="position: relative;">
                             <h5 class="card-title">${item["title"]}</h5>
+                            <hr>
                             <p class="card-text">${item["description"]}</p>
                             <div class="btn-group" role="group" style="position: absolute;top: 10px;right: 0px;">
                                 <div class="dropdown">
@@ -103,8 +107,9 @@ showNotes = () => {
                                         <span class="visually-hidden">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="deleteNote btn btn-outline-primary" onClick="deleteNotes(${data.indexOf(item)})">Delete</button>
-                                        <button type="button" class="editNote btn  btn-outline-primary" onClick="editButton(${data.indexOf(item)})">Edit</button>
+                                        <button type="button" class="deleteNote btn btn-outline-primary my-2" onClick="deleteNotes(${data.indexOf(item)})">Delete</button>
+                                        <button type="button" class="editNote btn  btn-outline-primary my-2" onClick="editButton(${data.indexOf(item)})">Edit</button>
+                                        <button type="button" class="btn btn-outline-success my-2" onClick="toDone(${data.indexOf(item)})">Set as done</button>
                                     </div>
                                 </div>   
                             </div>
@@ -115,11 +120,12 @@ showNotes = () => {
             })
 
             data.forEach(item => {
-                if (item["priority"].toLowerCase() == 'minimum') {
+                if (item["priority"].toLowerCase() == 'minimum' && item["status"].toLowerCase()== 'pending') {
                     html += `
-                    <div class="card my-2 mx-auto" style="width: 18rem;">
+                    <div class="card my-2 mx-auto border-danger text-danger" style="width: 18rem;">
                         <div class="card-body text-center" style="position: relative;">
                             <h5 class="card-title">${item["title"]}</h5>
+                            <hr>
                             <p class="card-text">${item["description"]}</p>
                             <div class="btn-group" role="group" style="position: absolute;top: 10px;right: 0px;">
                                 <div class="dropdown">
@@ -127,8 +133,9 @@ showNotes = () => {
                                         <span class="visually-hidden">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="deleteNote btn btn-outline-primary" onClick="deleteNotes(${data.indexOf(item)})">Delete</button>
-                                        <button type="button" class="editNote btn  btn-outline-primary" onClick="editButton(${data.indexOf(item)})">Edit</button>
+                                        <button type="button" class="deleteNote btn btn-outline-primary my-2" onClick="deleteNotes(${data.indexOf(item)})">Delete</button>
+                                        <button type="button" class="editNote btn  btn-outline-primary my-2" onClick="editButton(${data.indexOf(item)})">Edit</button>
+                                        <button type="button" class="btn  btn-outline-success my-2" onClick="toDone(${data.indexOf(item)})">Set as done</button>
                                     </div>
                                 </div>   
                             </div>
@@ -136,7 +143,33 @@ showNotes = () => {
                     </div>
                     `
                 }
-            })
+            });
+
+            data.forEach(item => {
+                if (item["status"].toLowerCase() == "done"){
+                    html += `
+                    <div class="card my-2 mx-auto border-success text-success" style="width: 18rem;">
+                        <div class="card-body text-center" style="position: relative;">
+                            <h5 class="card-title">${item["title"]}</h5>
+                            <hr>
+                            <p class="card-text">${item["description"]}</p>
+                            <div class="btn-group" role="group" style="position: absolute;top: 10px;right: 0px;">
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span class="visually-hidden">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
+                                        <button type="button" class="deleteNote btn btn-outline-primary my-2" onClick="deleteNotes(${data.indexOf(item)})">Delete</button>
+                                        <button type="button" class="editNote btn  btn-outline-primary my-2" onClick="editButton(${data.indexOf(item)})">Edit</button>
+                                        <button type="button" class="btn  btn-outline-danger my-2" onClick="toPending(${data.indexOf(item)})">Set as pending</button>
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </div>
+                    `
+                }
+            });
 
         }
         else {
@@ -224,6 +257,22 @@ editCancel = () => {
     location = window.location;
 }
 
+toPending = (id) => {
+    let data = JSON.parse(localStorage.getItem('notes'));
+    data[id]["status"] = "pending";
+    data = JSON.stringify(data);
+    localStorage.setItem('notes', data);
+    showNotes();
+}
+
+toDone = (id) => {
+    let data = JSON.parse(localStorage.getItem('notes'));
+    data[id]["status"] = "done";
+    data = JSON.stringify(data);
+    localStorage.setItem('notes', data);
+    showNotes();
+}
+
 searchNotes = () => {
     let query = document.getElementById('search').value.toLowerCase();
     let title = document.querySelectorAll('.card-title');
@@ -242,7 +291,7 @@ searchNotes = () => {
     nonmatch.forEach(element =>{
         element.parentElement.parentElement.style.display = "none" 
     });
-    
+
     match.forEach(element =>{
         element.parentElement.parentElement.style.display = "block" 
         console.log(element)
