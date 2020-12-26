@@ -294,16 +294,14 @@ darkLight = () => {
         var input = "#222";
         var card = "#333";
         var dropdown = "#111";
-        var bodw = "none";
         var stheme = "dark"
     }
     else{
         var bColor = "#fff"
         var hLabel = "#000";
-        var input = "#fff";
+        var input = "#e6e6e6";
         var card = "#fff";
         var dropdown = "#fff";
-        var bodw = "1px";
         var stheme = "light";
     }
     document.querySelector("body").style.background = bColor;
@@ -326,11 +324,6 @@ darkLight = () => {
     document.querySelectorAll(".dropdown-menu").forEach(element =>{
         element.style.background = dropdown;
     });
-
-    document.querySelectorAll("input").forEach(element =>{
-        element.style.border = bodw;
-    });
-    document.querySelector("textarea").style.border = bodw;
 
     localStorage.setItem('theme', stheme);
 }
