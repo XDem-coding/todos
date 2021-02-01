@@ -22,59 +22,39 @@
             <div class="form-check form-switch" style="margin:auto;">
                 <input class="form-check-input" type="checkbox" id="dark-light">
                 <label class="form-check-label text-light" for="dark-light">Theme</label>
-              </div>
+            </div>
             <form class="d-flex my-2" style="margin:auto;">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search">
+                <input class="form-control me-2" type="search" placeholder="Search by date or title" aria-label="Search"
+                    id="search">
             </form>
         </div>
     </nav>
     <div class="alert alert-success my-2" role="alert" id="success" style="display: none;">
-        None
+        Note added successfully..!!
     </div>
     <div class="container my-5">
         <h1 class="text-center my-5">Add To-Do here..!!</h1>
         <div class="card">
             <div class="card-body">
                 <label for="noteTitle" class="form-label">To-Do Title*</label>
-                <input type="text" class="form-control" id="noteTitle" style="text-transform: uppercase;background: #e6e6e6;border:none;">
+                <input type="text" class="form-control" id="noteTitle"
+                    style="text-transform: uppercase;background: #e6e6e6;border:none;">
 
                 <div class="alert alert-danger my-2" role="alert" id="emptyField" style="display: none;">
                     To-Do Title cannot be empty..!!
                 </div>
 
-                <div class="alert alert-danger my-2" role="alert" id="alreadyField" style="display: none;">
-                    A To-Do alredy exists with same title..!!
-                </div>
-
                 <label for="noteDescp" class="form-label">To-Do Description</label>
-                <textarea type="text" class="form-control" id="noteDescp" rows="3" style="background: #e6e6e6;border:none;"></textarea>
+                <textarea type="text" class="form-control" id="noteDescp" rows="3"
+                    style="background: #e6e6e6;border:none;"></textarea>
 
-                <div class="dropdown my-4">
-                    <label for="priority" class="form-label">To-Do Priority</label>
-                    <button class="btn dropdown-toggle" type="button" id="priority"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Priority
-                    </button>
-                    <div class="dropdown-menu">
-                        <div class="form-check m-1">
-                            <input class="form-check-input priority" type="radio" name="flexRadioDefault"
-                                id="flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">Maximum</label>
-                        </div>
-                        <div class="form-check m-1">
-                            <input class="form-check-input priority" type="radio" name="flexRadioDefault"
-                                id="flexRadioDefault2" checked>
-                            <label class="form-check-label" for="flexRadioDefault2">Normal</label>
-                        </div>
-                        <div class="form-check m-1">
-                            <input class="form-check-input priority" type="radio" name="flexRadioDefault"
-                                id="flexRadioDefault3" checked>
-                            <label class="form-check-label" for="flexRadioDefault3">Minimum</label>
-                        </div>
-                    </div>
-                </div>
+                <label for="noteDate" class="form-label">To-Do Date</label>
+                <input type="date" min="2000-01-10" class="form-control" id="noteDate"
+                    style="background: #e6e6e6;border:none;">
+
 
             </div>
+
             <div class="row container-fluid" id="btn-container" style="margin: 0;">
                 <button class="btn btn-primary my-4" id="addButton" style="width:100%;" onclick="addNote()">Add
                     To-Do</button>
@@ -95,11 +75,11 @@
     <script src="index.js"></script>
 
     <div class="alert alert-dark text-center my-0" role="alert">
-    <ul style="list-style-type: none; margin: 0;padding: 0;">
-        <li>All the data is stored on your own device.</li>
-        <li>However, it will be lost if web browser is uninstalled or its data is cleared.</li>
-    </ul>
-</div>
+        <ul style="list-style-type: none; margin: 0;padding: 0;">
+            <li>All the data is stored on your own device.</li>
+            <li>However, it will be lost if web browser is uninstalled or its data is cleared.</li>
+        </ul>
+    </div>
 </body>
 
 </html>
