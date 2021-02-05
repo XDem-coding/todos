@@ -3,16 +3,16 @@ todayDate = () => {
     var today = new Date();
 
     var dd = today.getDate();
-    var mm = today.getMonth()+1;
+    var mm = today.getMonth() + 1;
     var yyyy = today.getFullYear();
-    if(dd<10){
-            dd='0'+dd
-        } 
-        if(mm<10){
-            mm='0'+mm
-        } 
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
 
-    today = yyyy+'-'+mm+'-'+dd;
+    today = yyyy + '-' + mm + '-' + dd;
 
     return today;
 }
@@ -22,7 +22,7 @@ addNote = () => {
     let title = document.getElementById('noteTitle').value;
     let description = document.getElementById('noteDescp').value;
     let date = document.getElementById('noteDate').value;
-    if (date.length == 0) {date = todayDate()}
+    if (date.length == 0) { date = todayDate() }
     let status = "pending";
 
 
@@ -66,7 +66,7 @@ showNotes = () => {
             data = JSON.parse(notes);
 
             data.forEach(item => {
-                if (item['status'] == 'pending' && (new Date(todayDate()) > new Date(item['date'])) ) {
+                if (item['status'] == 'pending' && (new Date(todayDate()) > new Date(item['date']))) {
                     html += `
                     <div class="card my-2 mx-auto border-danger text-danger" style="width: 18rem;background:#ffcccc;">
                         <div class="card-body text-center" style="position: relative;">
@@ -92,9 +92,9 @@ showNotes = () => {
                     `
                 }
             })
-            
+
             data.forEach(item => {
-                if (item['status'] == 'pending' && (new Date(todayDate()) <= new Date(item['date'])) ) {
+                if (item['status'] == 'pending' && (new Date(todayDate()) <= new Date(item['date']))) {
                     html += `
                     <div class="card my-2 mx-auto border-primary text-primary" style="width: 18rem;background:#ccccff;">
                         <div class="card-body text-center" style="position: relative;">
@@ -184,7 +184,7 @@ editNote = (id) => {
     else {
         let data = JSON.parse(localStorage.getItem('notes'));
 
-        data[id] = {"title": title, "description": description, "date": date, "status": status};
+        data[id] = { "title": title, "description": description, "date": date, "status": status };
         data = JSON.stringify(data);
         localStorage.setItem('notes', data);
 
@@ -262,10 +262,12 @@ darkLight = () => {
     document.getElementById("search").style.background = input;
     document.getElementById("noteTitle").style.background = input;
     document.getElementById("noteDate").style.background = input;
+    document.getElementById("docPassword").style.background = input;
 
     document.getElementById("search").style.color = hLabel;
     document.getElementById("noteTitle").style.color = hLabel;
     document.getElementById("noteDate").style.color = hLabel;
+    document.getElementById("docPassword").style.color = hLabel;
 
     document.querySelector("hr").style.background = hLabel;
 
@@ -273,12 +275,50 @@ darkLight = () => {
     document.querySelector("textarea").style.color = hLabel;
 
     document.querySelector(".card").style.background = card;
-    
+    document.getElementById("modal").style.background = card;
+
     document.querySelectorAll(".dropdown-menu").forEach(element => {
         element.style.background = dropdown;
     });
 
     localStorage.setItem('theme', stheme);
+}
+
+addPassword = () => {
+    let pass = document.getElementById('docPassword').value
+    if (pass.length != 0) {
+        let encode = []
+        for (let i = 0; i < pass.length; i++) {
+            encode.push(pass.charCodeAt(i))
+        }
+
+        localStorage.setItem('password', encode)
+        localStorage.setItem('security', true)
+        pass = ''
+        document.getElementById('modal').style.display = 'none'
+    }
+}
+
+securityCheck = () => {
+    if (document.getElementById('securityCheck').checked == true) {
+        if (localStorage.getItem('password') == null) {
+            document.getElementById('modal').style.display = 'block'
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+        else if (localStorage.getItem('password') != null) {
+            localStorage.setItem('security', true);
+        }
+    }
+
+    if (document.getElementById('securityCheck').checked == false) {
+        document.getElementById('modal').style.display = 'none';
+        localStorage.setItem('security', false);
+    }
+}
+
+addPasswordClose = () => {
+    document.getElementById('securityCheck').checked = false;
+    document.getElementById('modal').style.display = 'none';
 }
 
 /* Perfect */
@@ -310,6 +350,9 @@ initialRun = () => {
     darkLight();
 
     document.getElementById("dark-light").addEventListener("input", darkLight);
+    document.getElementById("securityCheck").addEventListener("input", securityCheck);
+
+    if (localStorage.getItem('security') == 'true'){document.getElementById("securityCheck").checked = true}
 
     showNotes();
 
@@ -317,7 +360,6 @@ initialRun = () => {
 
     document.getElementById('noteTitle').addEventListener('input', () => {
         document.getElementById('emptyField').style.display = 'none';
-        document.getElementById('alreadyField').style.display = 'none';
         document.getElementById('success').style.display = 'none';
     })
 
@@ -329,4 +371,74 @@ initialRun = () => {
 
 }
 
-initialRun();
+enterYourPassword = () => {
+    prevHtml = document.documentElement.innerHTML
+
+    let pagehtml = `
+    <!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Make your to-do list here..!!">
+    <meta name="keywords" content="todo, list, reminder, notes">
+    <meta name="author" content="Chirag">
+    <link href="icon.ico" rel="shortcut icon" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>To Dos</title>
+</head>
+
+<body style="background:#121212;">
+
+<div class="card" id='modal' style="background: rgb(51, 51, 51);width:90%; margin:auto; margin-top:100px;">
+    <div class="card-body" style="position: relative;">
+        <h1 class="card-title text-center" style="color: rgb(255, 255, 255);">Enter Password</h1>
+        <hr>
+
+        <label for="" class="form-label" style="color: rgb(255, 255, 255);">Password</label>
+        <input type="password" class="form-control" id="docPassword"
+        style="background: rgb(34, 34, 34); border: none; color: rgb(255, 255, 255);">
+
+        <div class="alert alert-danger my-2" role="alert" id="danger" style="display: none;">
+            Wrong password..!!
+        </div>
+
+        <button class="btn btn-primary my-4" id="checkYourPassword" style="width:100%;" onclick="checkYourPassword()">Confirm</button>
+    </div>
+</div>
+</body>
+    `
+
+    document.documentElement.innerHTML = pagehtml
+}
+
+checkYourPassword = () => {
+    let inpass = document.getElementById('docPassword').value
+
+    pass = localStorage.getItem('password')
+
+    encode = [];
+
+    for (let i = 0; i < inpass.length; i++){
+        encode.push(inpass.charCodeAt(i))
+    }
+
+    if (pass == encode){
+        document.documentElement.innerHTML = prevHtml;
+        initialRun()
+    }
+    else{
+        document.getElementById('danger').style.display = 'block';
+    }
+}
+
+if (localStorage.getItem('security') != null){
+    if (localStorage.getItem('security') == 'true' && localStorage.getItem('password') != null) {enterYourPassword()}
+    else if (localStorage.getItem('security') == 'false') {document.onload = initialRun();}
+}
+else{
+initialRun();}
