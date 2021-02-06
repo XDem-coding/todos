@@ -293,7 +293,6 @@ addPassword = () => {
         }
 
         localStorage.setItem('password', encode)
-        localStorage.setItem('security', true)
         pass = ''
         document.getElementById('modal').style.display = 'none'
     }
@@ -301,18 +300,13 @@ addPassword = () => {
 
 securityCheck = () => {
     if (document.getElementById('securityCheck').checked == true) {
-        if (localStorage.getItem('password') == null) {
             document.getElementById('modal').style.display = 'block'
             window.scrollTo(0, document.body.scrollHeight);
-        }
-        else if (localStorage.getItem('password') != null) {
-            localStorage.setItem('security', true);
-        }
     }
 
     if (document.getElementById('securityCheck').checked == false) {
         document.getElementById('modal').style.display = 'none';
-        localStorage.setItem('security', false);
+        localStorage.setItem('password', null);
     }
 }
 
@@ -349,10 +343,10 @@ initialRun = () => {
     if (theme == "dark") { document.getElementById("dark-light").checked = true };
     darkLight();
 
+    if (localStorage.getItem('password') != null && localStorage.getItem('password') != 'null'){document.getElementById("securityCheck").checked = true}
+
     document.getElementById("dark-light").addEventListener("input", darkLight);
     document.getElementById("securityCheck").addEventListener("input", securityCheck);
-
-    if (localStorage.getItem('security') == 'true'){document.getElementById("securityCheck").checked = true}
 
     showNotes();
 
@@ -436,9 +430,9 @@ checkYourPassword = () => {
     }
 }
 
-if (localStorage.getItem('security') != null){
-    if (localStorage.getItem('security') == 'true' && localStorage.getItem('password') != null) {enterYourPassword()}
-    else if (localStorage.getItem('security') == 'false') {document.onload = initialRun();}
+if (localStorage.getItem('password') != null && localStorage.getItem('password') != 'null'){
+    enterYourPassword()
 }
 else{
-initialRun();}
+initialRun();
+}
