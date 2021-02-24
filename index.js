@@ -74,7 +74,7 @@ showNotes = () => {
                             <hr>
                             <h6 class="card-title">${item["date"]}</h6>
                             <hr>
-                            <p class="card-text"><pre>${item["description"]}</pre></p>
+                            <p class="card-text">${item["description"]}</p>
                             <div class="btn-group" role="group" style="position: absolute;top: 10px;right: 0px;">
                                 <div class="dropdown">
                                     <button type="button" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
